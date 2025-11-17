@@ -3,7 +3,6 @@ const thankYou = document.getElementById('thankYouMessage');
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
-
   const formData = new FormData(form);
   const data = {
     name: formData.get('name'),
@@ -11,8 +10,7 @@ form.addEventListener('submit', async (e) => {
   };
 
   try {
-    // Make POST request to Node server
-    const res = await fetch('http://localhost:3000/submit', {
+    const res = await fetch('https://booking-backend-oa6z.onrender.com/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
@@ -22,11 +20,10 @@ form.addEventListener('submit', async (e) => {
       form.style.display = 'none';
       thankYou.style.display = 'block';
     } else {
-      const result = await res.json();
-      alert(`Error: ${result.message}`);
+      alert('There was an error. Please try again.');
     }
   } catch (err) {
     console.error('Fetch error:', err);
-    alert('There was an error sending your request. Please try again.');
+    alert('Could not connect to the server.');
   }
 });
